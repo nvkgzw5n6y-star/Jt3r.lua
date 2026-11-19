@@ -58,6 +58,10 @@ do
     card.BorderSizePixel = 0
     card.Parent = shade
     card.ClipsDescendants = true
+    local cardConstraint = Instance.new("UISizeConstraint")
+    cardConstraint.MinSize = Vector2.new(300, 236)
+    cardConstraint.MaxSize = Vector2.new(520, 236)
+    cardConstraint.Parent = card
     Instance.new("UICorner", card).CornerRadius = UDim.new(0, 26)
     local cardStroke = Instance.new("UIStroke")
     cardStroke.Color = Color3.fromRGB(230, 190, 122)
@@ -406,8 +410,13 @@ shell.BorderSizePixel = 0
 shell.ZIndex = 1
 shell.ClipsDescendants = true
 shell.Parent = screenGui
-corner(shell, 18)
-stroke(shell, T.Accent, 0.72, 1.2)
+corner(shell, 24)
+stroke(shell, T.AccentBright, 0.56, 1.5)
+local shellOuterGlow = Instance.new("UIStroke")
+shellOuterGlow.Color = T.Accent
+shellOuterGlow.Transparency = 0.88
+shellOuterGlow.Thickness = 7
+shellOuterGlow.Parent = shell
 local shellSheen = Instance.new("UIGradient")
 shellSheen.Rotation = 115
 shellSheen.Color = ColorSequence.new({
