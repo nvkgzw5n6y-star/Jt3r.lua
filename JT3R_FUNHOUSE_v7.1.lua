@@ -28,7 +28,7 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local GUI_NAME = "JT3R_FUNHOUSE_V24"
 pcall(function()
     local old = (gethui and gethui()) or CoreGui
-    for _, oldName in ipairs({GUI_NAME, "JT3R_FUNHOUSE_V22", "JT3R_FUNHOUSE_V21"}) do
+    for _, oldName in ipairs({GUI_NAME, "JT3R_FUNHOUSE_V23", "JT3R_FUNHOUSE_V22", "JT3R_FUNHOUSE_V21", "JT3R_FUNZONE_KeyGate"}) do
         local existing = old:FindFirstChild(oldName)
         if existing then existing:Destroy() end
     end
