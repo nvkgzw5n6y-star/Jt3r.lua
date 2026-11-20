@@ -654,6 +654,7 @@ local sessionStartedAt = os.clock()
 local uninject
 local pageButtons = {}
 local pageFrames = {}
+local pages = {}
 local connections = {}
 
 local preferenceFolder = "JT3R/FUNHOUSE"
@@ -1577,7 +1578,6 @@ end
 
 -- remove shared initial pageScroll (dedicated page frames replace it)
 pageScroll:Destroy()
-local pages = {}
 for _, item in ipairs(navItems) do
     pages[item[1]] = createPage(item[1])
 end
