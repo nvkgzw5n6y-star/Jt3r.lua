@@ -45,6 +45,7 @@ do
     local backdrop = Instance.new("Frame")
     backdrop.Size = UDim2.fromScale(1, 1)
     backdrop.BackgroundColor3 = Color3.fromRGB(3, 4, 6)
+    backdrop.BackgroundTransparency = 1
     backdrop.BorderSizePixel = 0
     backdrop.Parent = keyGui
     local backdropGradient = Instance.new("UIGradient")
@@ -62,6 +63,7 @@ do
     card.Position = UDim2.fromScale(0.5, 0.5)
     card.Size = UDim2.new(0.9, 0, 0, 292)
     card.BackgroundColor3 = Color3.fromRGB(14, 15, 18)
+    card.BackgroundTransparency = 1
     card.BorderSizePixel = 0
     card.Parent = backdrop
     card.ClipsDescendants = true
@@ -197,6 +199,7 @@ do
     card.Position = UDim2.new(0.5, 0, 0.5, 16)
     local keyIn = TweenInfo.new(0.62, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
     TweenService:Create(backdrop, keyIn, {BackgroundTransparency = 0}):Play()
+    TweenService:Create(card, keyIn, {BackgroundTransparency = 0}):Play()
     TweenService:Create(keyScale, keyIn, {Scale = 1}):Play()
     TweenService:Create(card, keyIn, {Position = UDim2.fromScale(0.5, 0.5)}):Play()
     for object, values in pairs(keyOriginal) do
@@ -287,7 +290,7 @@ do
     shade.Name = "Backdrop"
     shade.Size = UDim2.fromScale(1, 1)
     shade.BackgroundColor3 = Color3.fromRGB(5, 6, 8)
-    shade.BackgroundTransparency = 0.24
+    shade.BackgroundTransparency = 1
     shade.BorderSizePixel = 0
     shade.Parent = splashGui
 
@@ -297,7 +300,7 @@ do
     card.Position = UDim2.fromScale(0.5, 0.5)
     card.Size = UDim2.new(0.88, 0, 0, 236)
     card.BackgroundColor3 = Color3.fromRGB(13, 14, 17)
-    card.BackgroundTransparency = 0.02
+    card.BackgroundTransparency = 1
     card.BorderSizePixel = 0
     card.Parent = shade
     card.ClipsDescendants = true
@@ -447,6 +450,7 @@ do
     -- Cinematic intro reveal: the card settles into place while the monogram and gold trim wake up.
     local splashIn = TweenInfo.new(0.72, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
     TweenService:Create(shade, splashIn, {BackgroundTransparency = 0.24}):Play()
+    TweenService:Create(card, splashIn, {BackgroundTransparency = 0.02}):Play()
     TweenService:Create(splashScale, splashIn, {Scale = 1}):Play()
     TweenService:Create(cardStroke, TweenInfo.new(0.65, Enum.EasingStyle.Quart), {Transparency = 0.12}):Play()
     TweenService:Create(diamond, TweenInfo.new(1.1, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Rotation = 0}):Play()
