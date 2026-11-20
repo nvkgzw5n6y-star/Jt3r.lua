@@ -3347,15 +3347,33 @@ local function updateResponsive()
         local heroGlow = homeHero:FindFirstChild("HeroGlow")
         local heroRing = homeHero:FindFirstChild("HeroRing")
         if mobile then
-            if heroTitle then heroTitle.Size = UDim2.new(1, -92, 0, 66); heroTitle.TextSize = 19 end
-            if heroSeal then heroSeal.Position = UDim2.new(1, -43, 0, 65); heroSeal.Size = UDim2.fromOffset(72, 34); heroSeal.TextSize = 18 end
-            if heroGlow then heroGlow.Size = UDim2.fromOffset(92, 92); heroGlow.Position = UDim2.new(1, -6, 0, 12) end
-            if heroRing then heroRing.Size = UDim2.fromOffset(78, 78); heroRing.Position = UDim2.new(1, -10, 0, 18) end
+            if heroTitle then
+                heroTitle.Position = UDim2.new(0, 19, 0, 46)
+                heroTitle.Size = UDim2.new(1, -112, 0, 64)
+                heroTitle.TextSize = 19
+            end
+            if heroSeal then
+                heroSeal.AnchorPoint = Vector2.new(1, 0.5)
+                heroSeal.Position = UDim2.new(1, -17, 0.52, 0)
+                heroSeal.Size = UDim2.fromOffset(76, 32)
+                heroSeal.TextSize = 18
+            end
+            if heroGlow then heroGlow.Size = UDim2.fromOffset(94, 94); heroGlow.Position = UDim2.new(1, -5, 0.52, 0) end
+            if heroRing then heroRing.Size = UDim2.fromOffset(80, 80); heroRing.Position = UDim2.new(1, -10, 0.52, 0) end
         else
-            if heroTitle then heroTitle.Size = UDim2.new(1, -142, 0, 66); heroTitle.TextSize = 25 end
-            if heroSeal then heroSeal.Position = UDim2.new(1, -74, 0, 66); heroSeal.Size = UDim2.fromOffset(112, 38); heroSeal.TextSize = 24 end
-            if heroGlow then heroGlow.Size = UDim2.fromOffset(142, 142); heroGlow.Position = UDim2.new(1, -12, 0, 12) end
-            if heroRing then heroRing.Size = UDim2.fromOffset(116, 116); heroRing.Position = UDim2.new(1, -16, 0, 16) end
+            if heroTitle then
+                heroTitle.Position = UDim2.new(0, 19, 0, 43)
+                heroTitle.Size = UDim2.new(1, -148, 0, 68)
+                heroTitle.TextSize = 26
+            end
+            if heroSeal then
+                heroSeal.AnchorPoint = Vector2.new(1, 0.5)
+                heroSeal.Position = UDim2.new(1, -27, 0.52, 0)
+                heroSeal.Size = UDim2.fromOffset(104, 42)
+                heroSeal.TextSize = 25
+            end
+            if heroGlow then heroGlow.Size = UDim2.fromOffset(148, 148); heroGlow.Position = UDim2.new(1, -10, 0.52, 0) end
+            if heroRing then heroRing.Size = UDim2.fromOffset(122, 122); heroRing.Position = UDim2.new(1, -17, 0.52, 0) end
         end
     end
     local shortcutPanel = pages.Home and pages.Home:FindFirstChild("WorkspaceShortcuts")
