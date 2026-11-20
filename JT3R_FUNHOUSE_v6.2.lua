@@ -1694,7 +1694,7 @@ REFINED.", 26, T.Text, Enum.Font.Merriweather)
     quickLayout.CellPadding = UDim2.new(0.025, 0, 0, 8)
     quickLayout.FillDirectionMaxCells = 2
     quickLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    quickLayout.Parent = quickLayout.Parent or quick
+    quickLayout.Parent = quick
     padding(quick, 12, 12, 12, 12)
 
     local shortcutData = {
