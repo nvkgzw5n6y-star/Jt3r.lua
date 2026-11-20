@@ -27,8 +27,10 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local GUI_NAME = "JT3R_FUNHOUSE_V23"
 pcall(function()
     local old = (gethui and gethui()) or CoreGui
-    local existing = old:FindFirstChild(GUI_NAME)
-    if existing then existing:Destroy() end
+    for _, oldName in ipairs({GUI_NAME, "JT3R_FUNHOUSE_V22", "JT3R_FUNHOUSE_V21"}) do
+        local existing = old:FindFirstChild(oldName)
+        if existing then existing:Destroy() end
+    end
 end)
 
 --// JT3R FUNZONE access gate
@@ -3579,7 +3581,7 @@ local function updateResponsive()
         brandMark.Size = UDim2.fromOffset(48, 50)
         brandName.Position = UDim2.new(0, 70, 0, 12)
         brandName.Size = UDim2.new(0, 120, 0, 27)
-        brandSub.Text = "FUNHOUSE  /  PRIVATE COLLECTION"
+        brandSub.Text = "OBSIDIAN ATELIER  /  PRIVATE SUITE"
         brandSub.Position = UDim2.new(0, 71, 0, 40)
         brandSub.Size = UDim2.new(0, 170, 0, 14)
         logoMinimizeHitbox.Size = UDim2.fromOffset(194, 54)
