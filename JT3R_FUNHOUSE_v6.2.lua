@@ -1616,7 +1616,7 @@ do
     heroIndex.Position = UDim2.new(0, 20, 0, 19)
     heroIndex.Size = UDim2.new(1, -145, 0, 14)
 
-    local heroTitle = label(hero, "CONTROL,\\nREFINED.", 26, T.Text, Enum.Font.Merriweather)
+    local heroTitle = label(hero, "CONTROL,\nREFINED.", 26, T.Text, Enum.Font.Merriweather)
     heroTitle.Name = "HeroTitle"
     heroTitle.Position = UDim2.new(0, 19, 0, 43)
     heroTitle.Size = UDim2.new(1, -148, 0, 68)
