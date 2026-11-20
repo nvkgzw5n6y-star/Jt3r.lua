@@ -3535,7 +3535,7 @@ local function updateResponsive()
         shellScale.Scale = userScale
         -- Mobile uses a full-width bottom dock instead of a cramped left rail.
         mobileDock = true
-        sidebar.Position = UDim2.new(0, 0, 1, -54)
+        sidebar.Position = UDim2.new(0, 0, 1, -22)
         sidebar.Size = UDim2.new(1, 0, 0, 54)
         sidebar.BackgroundColor3 = Color3.fromRGB(10, 11, 13)
         navCaption.Visible = false
