@@ -2528,6 +2528,70 @@ for _, name in ipairs({"Aim", "ESP", "Visuals", "Fly", "Misc"}) do
         noteText.TextWrapped = true
         noteText.TextYAlignment = Enum.TextYAlignment.Top
 
+        section(p, "Noclip control")
+        local noclipPanel = panelFor(p, 142)
+        noclipPanel.Name = "NoclipControlPanel"
+        local noclipTitle = label(noclipPanel, "JT3R NOCLIP", 15, T.AccentBright, Enum.Font.Merriweather)
+        noclipTitle.Position = UDim2.new(0, 15, 0, 11)
+        noclipTitle.Size = UDim2.new(1, -30, 0, 22)
+        local noclipInfo = label(noclipPanel, "MOBILE  Tap the button  •  PC  Press V\nRequires a permission-checked JT3R_NoClipControl RemoteEvent in the experience.", 9, T.Muted, Enum.Font.SourceSans)
+        noclipInfo.Position = UDim2.new(0, 15, 0, 38)
+        noclipInfo.Size = UDim2.new(1, -30, 0, 31)
+        noclipInfo.TextWrapped = true
+        noclipInfo.TextYAlignment = Enum.TextYAlignment.Top
+        local noclipEnabled = false
+        local noclipStatus = label(noclipPanel, "STANDBY  •  SERVER SUPPORT REQUIRED", 8, T.Quiet, Enum.Font.RobotoMono)
+        noclipStatus.Position = UDim2.new(0, 15, 0, 76)
+        noclipStatus.Size = UDim2.new(1, -150, 0, 30)
+        noclipStatus.TextWrapped = true
+        local noclipButton = button(noclipPanel, "NOCLIP OFF", UDim2.fromOffset(116, 38), T.Surface3, T.AccentBright)
+        noclipButton.AnchorPoint = Vector2.new(1, 0)
+        noclipButton.Position = UDim2.new(1, -14, 0, 78)
+        noclipButton.TextSize = 9
+        local function setNoClip(nextEnabled)
+            local remote = ReplicatedStorage:FindFirstChild("JT3R_NoClipControl")
+            if not remote or not remote:IsA("RemoteEvent") then
+                noclipStatus.Text = "UNAVAILABLE  •  SERVER CONTROLLER NOT FOUND"
+                noclipStatus.TextColor3 = T.Danger
+                notify("Noclip unavailable", "This experience has not installed the JT3R server-side noclip controller.")
+                return false
+            end
+            noclipEnabled = nextEnabled == true
+            local sent = pcall(function()
+                remote:FireServer({Action = "SetNoClip", Enabled = noclipEnabled})
+            end)
+            if not sent then
+                noclipEnabled = false
+                noclipStatus.Text = "REQUEST FAILED  •  TRY AGAIN"
+                noclipStatus.TextColor3 = T.Danger
+                return false
+            end
+            noclipButton.Text = noclipEnabled and "NOCLIP ON" or "NOCLIP OFF"
+            noclipButton.BackgroundColor3 = noclipEnabled and T.AccentSoft or T.Surface3
+            noclipButton.TextColor3 = noclipEnabled and T.AccentBright or T.Muted
+            noclipStatus.Text = noclipEnabled and "ON  •  REQUEST SENT TO SERVER" or "OFF  •  REQUEST SENT TO SERVER"
+            noclipStatus.TextColor3 = noclipEnabled and T.Success or T.Quiet
+            notify("Noclip", noclipEnabled and "Enable request sent." or "Disable request sent.")
+            return true
+        end
+        noclipButton.Activated:Connect(function()
+            setNoClip(not noclipEnabled)
+        end)
+        addConnection(UserInputService.InputBegan:Connect(function(input, processed)
+            if processed or input.KeyCode ~= Enum.KeyCode.V then return end
+            setNoClip(not noclipEnabled)
+        end))
+        addConnection(LocalPlayer.CharacterAdded:Connect(function()
+            if noclipEnabled then
+                noclipEnabled = false
+                noclipButton.Text = "NOCLIP OFF"
+                noclipButton.BackgroundColor3 = T.Surface3
+                noclipButton.TextColor3 = T.Muted
+                noclipStatus.Text = "RESET  •  CHARACTER RESPAWNED"
+                noclipStatus.TextColor3 = T.Quiet
+            end
+        end))
+
     elseif name == "Misc" then
         section(p, "Player intelligence")
         local selectedPlayer = nil
