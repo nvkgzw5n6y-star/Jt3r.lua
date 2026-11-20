@@ -1539,20 +1539,22 @@ local function setPage(name)
     end
     for pageName, frame in pairs(pageFrames) do
         local selected = pageName == name
+        frame.Visible = selected
+        frame.Active = selected
+        frame.ZIndex = 3
         if selected then
-            frame.Visible = true
+            if frame.Parent ~= content then frame.Parent = content end
+            frame.CanvasPosition = Vector2.new(0, 0)
+            local pageLayout = frame:FindFirstChildOfClass("UIListLayout")
+            if pageLayout then
+                frame.CanvasSize = UDim2.new(0, 0, 0, math.max(pageLayout.AbsoluteContentSize.Y + 20, frame.AbsoluteSize.Y))
+            end
             if animationsEnabled then
                 local destination = frame.Position
                 frame.Position = UDim2.new(destination.X.Scale, destination.X.Offset + 9, destination.Y.Scale, destination.Y.Offset + 2)
                 tween(frame, 0.26, {Position = destination}, Enum.EasingStyle.Quart)
             end
-        else
-            frame.Visible = false
         end
-    end
-    -- Each page uses a dedicated scroll frame so switching pages starts cleanly.
-    if pageFrames[name] then
-        pageFrames[name].CanvasPosition = Vector2.new(0, 0)
     end
 end
 
@@ -1564,15 +1566,27 @@ local function createPage(name)
     scroll.BorderSizePixel = 0
     scroll.Position = UDim2.new(0, 24, 0, 82)
     scroll.Size = UDim2.new(1, -48, 1, -100)
-    scroll.ScrollBarThickness = 2
+    scroll.ScrollBarThickness = 3
     scroll.ScrollBarImageColor3 = T.Accent
-    scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    scroll.ScrollBarImageTransparency = 0.12
+    scroll.ScrollingDirection = Enum.ScrollingDirection.Y
+    scroll.AutomaticCanvasSize = Enum.AutomaticSize.None
     scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+    scroll.Active = true
     scroll.Visible = false
+    scroll.ZIndex = 3
     scroll.Parent = content
     padding(scroll, 0, 5, 0, 14)
-    listLayout(scroll, Enum.FillDirection.Vertical, 12)
+    local pageLayout = listLayout(scroll, Enum.FillDirection.Vertical, 12)
+    local function refreshCanvas()
+        if scroll.Parent then
+            scroll.CanvasSize = UDim2.new(0, 0, 0, math.max(pageLayout.AbsoluteContentSize.Y + 20, scroll.AbsoluteSize.Y))
+        end
+    end
+    pageLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(refreshCanvas)
+    scroll:GetPropertyChangedSignal("AbsoluteSize"):Connect(refreshCanvas)
     pageFrames[name] = scroll
+    task.defer(refreshCanvas)
     return scroll
 end
 
