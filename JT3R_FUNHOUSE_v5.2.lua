@@ -3278,10 +3278,10 @@ do
     local p = pages.Console
     section(p, "Session log")
     local logPanel = panelFor(p, 126)
-    local logTitle = label(logPanel, "JT3R FUNHOUSE v5.1 initialised", 12, T.Text, Enum.Font.SourceSansSemibold)
+    local logTitle = label(logPanel, "JT3R FUNHOUSE v5.2 initialised", 12, T.Text, Enum.Font.SourceSansSemibold)
     logTitle.Position = UDim2.new(0, 16, 0, 16)
     logTitle.Size = UDim2.new(1, -32, 0, 20)
-    local logDesc = label(logPanel, "UI v5.1  •  Obsidian Atelier  •  Local session", 10, T.Muted, Enum.Font.SourceSans)
+    local logDesc = label(logPanel, "UI v5.2  •  Obsidian Atelier  •  Local session", 10, T.Muted, Enum.Font.SourceSans)
     logDesc.Position = UDim2.new(0, 16, 0, 43)
     logDesc.Size = UDim2.new(1, -32, 0, 18)
     local logState = label(logPanel, "●  STATUS     READY", 9, T.Success, Enum.Font.RobotoMono)
@@ -3814,7 +3814,7 @@ setPage("Home")
 updateResponsive()
 task.delay(0.35, function()
     if screenGui.Parent then
-        notify("Welcome to JT3R", "Obsidian Atelier  •  v5.1")
+        notify("Welcome to JT3R", "Obsidian Atelier  •  v5.2")
     end
 end)
 
