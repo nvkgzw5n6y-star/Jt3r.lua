@@ -1346,6 +1346,8 @@ local function actionRow(parent, title, subtitle, actionText, callback)
     return row
 end
 
+local mobileDock = false
+
 local function setPage(name)
     currentPage = name
     pageTitle.Text = name
@@ -1386,7 +1388,11 @@ local function setPage(name)
         if marker then
             marker.Visible = selected
             marker.BackgroundColor3 = T.AccentBright
-            if selected then
+            if mobileDock then
+                marker.Position = UDim2.new(0.18, 0, 1, -3)
+                marker.Size = UDim2.new(0.64, 0, 0, 2)
+            elseif selected then
+                marker.Position = UDim2.new(0, 0, 0.18, 0)
                 marker.Size = UDim2.new(0, 2, 0.35, 0)
                 tween(marker, 0.22, {Size = UDim2.new(0, 3, 0.68, 0)}, Enum.EasingStyle.Back)
             end
@@ -3527,32 +3533,44 @@ local function updateResponsive()
         shell.Size = UDim2.new(0, math.max(300, math.min(viewport.X - 22, 900)), 0, math.max(300, math.min(viewport.Y - 24, 760)))
         ambientHalo.Size = UDim2.new(0, math.max(318, math.min(viewport.X - 14, 900)) + 22, 0, math.max(300, math.min(viewport.Y - 24, 760)) + 22)
         shellScale.Scale = userScale
-        sidebar.Size = UDim2.new(0, 82, 1, 0)
-        navCaption.Text = "JT3R"
-        navCaption.TextSize = 9
-        navCaption.TextXAlignment = Enum.TextXAlignment.Center
-        navCaption.Position = UDim2.new(0, 4, 0, 20)
-        navCaption.Size = UDim2.new(1, -8, 0, 18)
-        navCaptionRule.Position = UDim2.new(0, 12, 0, 43)
-        navCaptionRule.Size = UDim2.new(1, -24, 0, 1)
-        navHolder.Position = UDim2.new(0, 7, 0, 54)
-        navHolder.Size = UDim2.new(1, -14, 1, -66)
+        -- Mobile uses a full-width bottom dock instead of a cramped left rail.
+        mobileDock = true
+        sidebar.Position = UDim2.new(0, 0, 1, -54)
+        sidebar.Size = UDim2.new(1, 0, 0, 54)
+        sidebar.BackgroundColor3 = Color3.fromRGB(10, 11, 13)
+        navCaption.Visible = false
+        navCaptionRule.Visible = false
+        sideInset.Position = UDim2.new(0, 0, 0, 0)
+        sideInset.Size = UDim2.new(1, 0, 0, 1)
+        sideInset.BackgroundTransparency = 0.18
+        navHolder.Position = UDim2.new(0, 8, 0, 5)
+        navHolder.Size = UDim2.new(1, -16, 0, 44)
+        navHolder.ScrollingDirection = Enum.ScrollingDirection.X
+        navHolder.AutomaticCanvasSize = Enum.AutomaticSize.X
+        navHolder.ScrollBarThickness = 0
+        local mobileLayout = navHolder:FindFirstChildOfClass("UIListLayout")
+        if mobileLayout then
+            mobileLayout.FillDirection = Enum.FillDirection.Horizontal
+            mobileLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+            mobileLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+            mobileLayout.Padding = UDim.new(0, 4)
+        end
         for pageName, navButton in pairs(pageButtons) do
-            navButton.Size = UDim2.new(1, 0, 0, 46)
+            navButton.Size = UDim2.fromOffset(38, 42)
             local navIcon = navButton:FindFirstChild("NavIcon")
             local navText = navButton:FindFirstChild(pageName)
-            if navIcon then navIcon.Position = UDim2.new(0, 0, 0, 0); navIcon.Size = UDim2.fromScale(1, 1); navIcon.TextSize = 14 end
+            if navIcon then navIcon.Position = UDim2.fromScale(0, 0); navIcon.Size = UDim2.fromScale(1, 1); navIcon.TextSize = 14 end
             if navText then navText.Visible = false end
             local marker = navButton:FindFirstChild("ActiveGoldMarker")
-            if marker then marker.Position = UDim2.new(0, 0, 0.2, 0); marker.Size = UDim2.new(0, 2, 0.6, 0) end
+            if marker then marker.Position = UDim2.new(0.18, 0, 1, -3); marker.Size = UDim2.new(0.64, 0, 0, 2) end
         end
-        content.Position = UDim2.new(0, 82, 0, 0)
-        content.Size = UDim2.new(1, -82, 1, 0)
-        pageTop.Position = UDim2.new(0, 14, 0, 17)
-        pageTop.Size = UDim2.new(1, -28, 0, 48)
+        content.Position = UDim2.new(0, 0, 0, 0)
+        content.Size = UDim2.new(1, 0, 1, 0)
+        pageTop.Position = UDim2.new(0, 16, 0, 17)
+        pageTop.Size = UDim2.new(1, -32, 0, 48)
         for _, page in pairs(pageFrames) do
-            page.Position = UDim2.new(0, 14, 0, 78)
-            page.Size = UDim2.new(1, -28, 1, -94)
+            page.Position = UDim2.new(0, 16, 0, 78)
+            page.Size = UDim2.new(1, -32, 1, -148)
         end
         brandMark.Position = UDim2.new(0, 12, 0, 13)
         brandMark.Size = UDim2.fromOffset(48, 50)
@@ -3583,7 +3601,25 @@ local function updateResponsive()
         shell.Size = UDim2.new(0, 850, 0, 570)
         shellScale.Scale = userScale * math.min(1, viewport.X / 1000, viewport.Y / 700)
         ambientHalo.Size = UDim2.new(0, 850 * shellScale.Scale + 24, 0, 570 * shellScale.Scale + 24)
+        mobileDock = false
+        sidebar.Position = UDim2.new(0, 0, 0, 0)
         sidebar.Size = UDim2.new(0, 160, 1, 0)
+        sidebar.BackgroundColor3 = T.Surface
+        navCaption.Visible = true
+        navCaptionRule.Visible = true
+        sideInset.Position = UDim2.new(1, -1, 0, 16)
+        sideInset.Size = UDim2.new(0, 1, 1, -32)
+        sideInset.BackgroundTransparency = 0.35
+        navHolder.ScrollingDirection = Enum.ScrollingDirection.Y
+        navHolder.AutomaticCanvasSize = Enum.AutomaticSize.Y
+        navHolder.ScrollBarThickness = 2
+        local desktopLayout = navHolder:FindFirstChildOfClass("UIListLayout")
+        if desktopLayout then
+            desktopLayout.FillDirection = Enum.FillDirection.Vertical
+            desktopLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+            desktopLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+            desktopLayout.Padding = UDim.new(0, 5)
+        end
         navCaption.Text = "JT3R  /  ATELIER"
         navCaption.TextXAlignment = Enum.TextXAlignment.Left
         navCaption.Position = UDim2.new(0, 17, 0, 20)
