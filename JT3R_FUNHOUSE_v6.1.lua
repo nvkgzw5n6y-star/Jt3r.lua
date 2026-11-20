@@ -3440,6 +3440,7 @@ for index, item in ipairs(navItems) do
     icon.Position = UDim2.new(0, 5, 0, 0)
     icon.Size = UDim2.new(0, 27, 1, 0)
     local txt = label(b, string.upper(name), 10, T.Muted, Enum.Font.SourceSansSemibold)
+    txt.Name = name
     txt.Position = UDim2.new(0, 37, 0, 0)
     txt.Size = UDim2.new(1, -51, 1, 0)
     pageButtons[name] = b
@@ -3540,6 +3541,29 @@ local function updateResponsive()
         sidebar.BackgroundColor3 = Color3.fromRGB(12, 13, 15)
         sidebar.BackgroundTransparency = 0.02
         sidebar.ClipsDescendants = true
+        local dockCorner = sidebar:FindFirstChildOfClass("UICorner")
+        if not dockCorner then
+            dockCorner = Instance.new("UICorner")
+            dockCorner.CornerRadius = UDim.new(0, 16)
+            dockCorner.Parent = sidebar
+        end
+        local dockStroke = sidebar:FindFirstChild("DockFrameStroke")
+        if not dockStroke then
+            dockStroke = Instance.new("UIStroke")
+            dockStroke.Name = "DockFrameStroke"
+            dockStroke.Parent = sidebar
+        end
+        dockStroke.Color = T.Accent
+        dockStroke.Transparency = 0.62
+        dockStroke.Thickness = 1
+        local dockGradient = sidebar:FindFirstChild("DockGradient")
+        if not dockGradient then
+            dockGradient = Instance.new("UIGradient")
+            dockGradient.Name = "DockGradient"
+            dockGradient.Rotation = 90
+            dockGradient.Parent = sidebar
+        end
+        dockGradient.Color = ColorSequence.new(Color3.fromRGB(27, 25, 21), Color3.fromRGB(10, 11, 13))
         navCaption.Visible = false
         navCaptionRule.Visible = false
         sideInset.Position = UDim2.new(0, 12, 0, 0)
@@ -3586,7 +3610,8 @@ local function updateResponsive()
             navButton.Size = UDim2.new(0.25, -5, 0, 22)
             navButton.BackgroundColor3 = T.Surface2
             navButton.ClipsDescendants = true
-            corner(navButton, 7)
+            local navCorner = navButton:FindFirstChildOfClass("UICorner")
+            if navCorner then navCorner.CornerRadius = UDim.new(0, 7) end
             local navIcon = navButton:FindFirstChild("NavIcon")
             local navText = navButton:FindFirstChild(pageName)
             if navIcon then
@@ -3601,6 +3626,7 @@ local function updateResponsive()
                 navText.Size = UDim2.new(1, -24, 1, 0)
                 navText.TextSize = 7
                 navText.Font = Enum.Font.SourceSansSemibold
+                navText.TextXAlignment = Enum.TextXAlignment.Left
             end
             local marker = navButton:FindFirstChild("ActiveGoldMarker")
             if marker then
@@ -3687,7 +3713,9 @@ local function updateResponsive()
             local navIcon = navButton:FindFirstChild("NavIcon")
             local navText = navButton:FindFirstChild(pageName)
             if navIcon then navIcon.Position = UDim2.new(0, 5, 0, 0); navIcon.Size = UDim2.new(0, 27, 1, 0); navIcon.TextSize = 10 end
-            if navText then navText.Visible = true; navText.Position = UDim2.new(0, 37, 0, 0); navText.Size = UDim2.new(1, -51, 1, 0); navText.TextSize = 10 end
+            if navText then navText.Visible = true; navText.Position = UDim2.new(0, 37, 0, 0); navText.Size = UDim2.new(1, -51, 1, 0); navText.TextSize = 10; navText.TextXAlignment = Enum.TextXAlignment.Left end
+            local navCorner = navButton:FindFirstChildOfClass("UICorner")
+            if navCorner then navCorner.CornerRadius = UDim.new(0, 12) end
             local marker = navButton:FindFirstChild("ActiveGoldMarker")
             if marker then marker.Position = UDim2.new(0, 0, 0.18, 0); marker.Size = UDim2.new(0, 3, 0.64, 0) end
             local activeDot = navButton:FindFirstChild("ActiveNavDot")
