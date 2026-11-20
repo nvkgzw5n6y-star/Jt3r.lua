@@ -1476,7 +1476,6 @@ local mobileDock = false
 
 local function setPage(name)
     if pages[name] then savePreferences(name, sessionPreferences.welcomed) end
-local function setPage(name)
     currentPage = name
     pageTitle.Text = name
     local pageNumber = 1
