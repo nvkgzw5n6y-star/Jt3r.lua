@@ -3644,7 +3644,7 @@ local function updateResponsive()
         pageTop.Size = UDim2.new(1, -32, 0, 48)
         for _, page in pairs(pageFrames) do
             page.Position = UDim2.new(0, 16, 0, 78)
-            page.Size = UDim2.new(1, -32, 1, -148)
+            page.Size = UDim2.new(1, -32, 1, -180)
         end
         brandMark.Position = UDim2.new(0, 12, 0, 13)
         brandMark.Size = UDim2.fromOffset(48, 50)
